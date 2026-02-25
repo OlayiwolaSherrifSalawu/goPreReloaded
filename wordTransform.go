@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -41,7 +40,9 @@ func Capitalize(text string) string {
 	if text == "" {
 		return ""
 	}
-	return strings.ToTitle(strings.ToLower(text))
+	firstLetter := text[0]
+	restOfLetters := text[1:]
+	return strings.ToUpper(string(firstLetter)) + strings.ToLower(string(restOfLetters))
 }
 
 // Base Coverter in Go(binary, and Hexdecimal)
@@ -53,7 +54,7 @@ func Binary(text string) string {
 	}
 	store, err := strconv.ParseInt(text, 2, 64)
 	if err != nil {
-		log.Fatal("couldnt convert error")
+		return text
 	}
 	return strconv.Itoa(int(store))
 }
@@ -65,7 +66,7 @@ func HexDecimal(text string) string {
 	}
 	store, err := strconv.ParseInt(text, 16, 64)
 	if err != nil {
-		log.Fatal("couldnt convert error")
+		return text
 	}
 	return strconv.Itoa(int(store))
 }
