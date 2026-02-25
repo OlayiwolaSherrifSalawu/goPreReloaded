@@ -17,21 +17,21 @@ func WordSplitter(text string) ([]string, error) {
 	// spilting string.
 	var store []string
 	store = strings.Fields(text)
-	return store, fmt.Errorf("cannot split empty string")
+	return store, nil
 }
 
 // Case Manipulators (ToUpper,ToLower,Capitalize)
 func ToLower(text string) string {
 	// handle edge case (1. if the input parameter is empty)
 	if text == "" {
-		return "cannot split convert empty string"
+		return ""
 	}
 	return strings.ToLower(text)
 }
 func ToUpper(text string) string {
 	// handle edge case (1. if the input parameter is empty)
 	if text == "" {
-		return "cannot split convert empty string"
+		return ""
 	}
 	return strings.ToUpper(text)
 }
@@ -39,7 +39,7 @@ func ToUpper(text string) string {
 func Capitalize(text string) string {
 	// handle edge case (1. if the input parameter is empty)
 	if text == "" {
-		return "cannot split convert empty string"
+		return ""
 	}
 	return strings.ToTitle(strings.ToLower(text))
 }
@@ -49,7 +49,7 @@ func Capitalize(text string) string {
 func Binary(text string) string {
 	// handle edge case (1. if the input parameter is empty)
 	if text == "" {
-		return "cannot convert empty string"
+		return ""
 	}
 	store, err := strconv.ParseInt(text, 2, 64)
 	if err != nil {
@@ -61,7 +61,7 @@ func Binary(text string) string {
 func HexDecimal(text string) string {
 	// handle edge case (1. if the input parameter is empty)
 	if text == "" {
-		return "cannot convert empty string"
+		return ""
 	}
 	store, err := strconv.ParseInt(text, 16, 64)
 	if err != nil {
