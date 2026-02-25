@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -51,12 +51,21 @@ func Binary(text string) string {
 	if text == "" {
 		return "cannot convert empty string"
 	}
-	textLen := len(text)
-
-	store := ""
-	for i := 0; i < textLen; i++ {
-		set, _ := strconv.Atoi(string(int(text[i]) * int(math.Pow(2.0, float64(textLen-i)))))
-		store += strconv.Itoa((set))
+	store, err := strconv.ParseInt(text, 2, 64)
+	if err != nil {
+		log.Fatal("couldnt convert error")
 	}
-	return store
+	return strconv.Itoa(int(store))
+}
+
+func HexDecimal(text string) string {
+	// handle edge case (1. if the input parameter is empty)
+	if text == "" {
+		return "cannot convert empty string"
+	}
+	store, err := strconv.ParseInt(text, 16, 64)
+	if err != nil {
+		log.Fatal("couldnt convert error")
+	}
+	return strconv.Itoa(int(store))
 }
