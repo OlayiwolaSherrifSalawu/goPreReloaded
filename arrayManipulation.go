@@ -1,30 +1,54 @@
-	package main
+package main
 
-	import (
-		"strings"
-	)
+import (
+	"strconv"
+	"strings"
+)
 
-	func LookAtWord(text string) string {
-		caseToLook := map[string]func(string) string{
-			"(bin)": Binary,
-			"(up)":  ToUpper,
-			"(low)": ToLower,
-			"(hex)": HexDecimal,
-			"(cap)": Capitalize,
+func LookAtWord(text string) string {
+	caseToLook := map[string]func(string) string{
+		"bin": Binary,
+		"up":  ToUpper,
+		"low": ToLower,
+		"hex": HexDecimal,
+		"cap": Capitalize,
+	}
+	sliceOfWords, err := WordSplitter(text)
+	if err != nil {
+		return ""
+	}
+	var result []string
+	skipNext := false
+	for i, words := range sliceOfWords {
+		var newWord = ""
+		if skipNext {
+			skipNext = false
+			continue
 		}
-		sliceOfWords, err := WordSplitter(text)
-		if err != nil {
-			return ""
+		n := 1
+		if strings.HasPrefix(words, "(") {
+			newWord = strings.Trim(words, "(),")
+			if strings.HasSuffix(words, ",") && i+1 < len(sliceOfWords) {
+				n, err = strconv.Atoi(strings.TrimSuffix(sliceOfWords[i+1], ")"))
+				skipNext = true
+				if err != nil {
+					return ""
+				}
+			}
+		} else {
+			result = append(result, words)
 		}
-		var result []string
-		for _, words := range sliceOfWords {
-			previousChar := len(result) - 1
-			val, ok := caseToLook[words]
-			if !ok {
-				result = append(result, words)
-			} else if len(result) > 0 && ok {
-				result[previousChar] = val(result[previousChar])
+
+		val, ok := caseToLook[newWord]
+		if ok {
+			for step := 1; step <= n; step++ {
+				targetIndex := len(result) - step
+				if targetIndex >= 0 {
+					result[targetIndex] = val(result[targetIndex])
+				}
 			}
 		}
-		return strings.Join(result, " ")
+
 	}
+	return strings.Join(result, " ")
+}
