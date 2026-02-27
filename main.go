@@ -6,7 +6,6 @@ import (
 
 func main() {
 	sentence := "It has been 10 (bin) years"
-
-	ans := binary(sentence)
+	ans := Binary(sentence)
 	fmt.Println(ans)
 }
