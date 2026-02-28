@@ -36,7 +36,7 @@ func (f *FileStruct) ReadFile() (string, error) {
 	return store.String(), nil
 }
 
-func (f *FileStruct) WriteTo() error {
+func (f *FileStruct) WriteTo(text string) error {
 	file, err := os.Create(f.OutputFileName)
 
 	if err != nil {
@@ -44,11 +44,7 @@ func (f *FileStruct) WriteTo() error {
 	}
 	defer file.Close()
 	writer := bufio.NewWriter(file)
-	content, err := f.ReadFile()
-	if err != nil {
-		return fmt.Errorf("Could not Write file %s, because %v", f.OutputFileName, err)
-	}
-
+	content := text
 	_, err = writer.WriteString(content)
 	if err != nil {
 		return fmt.Errorf("Could not Write file %s, because %v", f.OutputFileName, err)
